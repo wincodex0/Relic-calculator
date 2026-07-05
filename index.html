@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relic Token Calculator</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Relic Token Calculator</h1>
+      <div class="sub">Accounts for the ascension reset at level 25 / 50 / 75</div>
+
+      <div class="panel">
+        <div class="row">
+          <div class="field">
+            <label for="level">Target Relic Level (0–100)</label>
+            <input type="number" id="level" min="0" max="100" value="100" />
+            <input type="range" id="levelSlider" min="0" max="100" value="100" />
+            <div class="level-marks">
+              <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="relics">Number of Relics</label>
+            <input type="number" id="relics" min="1" value="1" />
+          </div>
+        </div>
+
+        <div class="quick">
+          <button data-lvl="25">Lv 25</button>
+          <button data-lvl="50">Lv 50</button>
+          <button data-lvl="75">Lv 75</button>
+          <button data-lvl="100">Lv 100</button>
+        </div>
+
+        <div class="toggle-row">
+          <input type="checkbox" id="resetMode" checked />
+          <label for="resetMode" class="toggle-label">
+            Include ascension re-leveling cost (real in-game cost). Uncheck to see the naive straight-sum cost instead.
+          </label>
+        </div>
+      </div>
+
+      <div class="panel result-hero">
+        <div class="amount" id="totalAmount">0</div>
+        <div class="label" id="totalLabel">Relic Tokens Needed</div>
+      </div>
+
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Levels</th>
+              <th class="num">Full Tier Cost</th>
+              <th class="num">Times Paid</th>
+              <th class="num">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="breakdownBody"></tbody>
+        </table>
+        <div class="note" id="footnote"></div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
