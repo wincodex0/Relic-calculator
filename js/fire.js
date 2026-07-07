@@ -1,6 +1,7 @@
 const ALARM_LEAD_MINUTES = 1;
 let alarmTimer = null;
 let lastAlarmTimestamp = null;
+let audioContext = null;
 
 function formatTimeInZone(date, timeZone) {
   return new Intl.DateTimeFormat('en-US', {
@@ -13,10 +14,10 @@ function formatTimeInZone(date, timeZone) {
 
 function buildFullDaySchedule(timeZone, selectedDate) {
   const schedule = [];
-  const cycleStart = new Date('2026-07-07T00:05:00+08:00');
+  const cycleStart = new Date('2026-07-07T00:00:00+08:00');
   const selectedDateStart = new Date(`${selectedDate}T00:00:00+08:00`);
   const selectedDateEnd = new Date(selectedDateStart.getTime() + 24 * 60 * 60 * 1000);
-  const cycleStep = 35 * 60 * 1000;
+  const cycleStep = 15 * 60 * 1000;
 
   let spawnDate = new Date(cycleStart.getTime());
 
@@ -45,22 +46,36 @@ function playAlarmSound() {
       return;
     }
 
-    const context = new AudioContext();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
+    if (!audioContext) {
+      audioContext = new AudioContext();
+    }
 
-    oscillator.type = 'sine';
-    oscillator.frequency.value = 880;
-    gain.gain.value = 0.15;
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
 
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start();
-    oscillator.stop(context.currentTime + 0.5);
+    const context = audioContext;
+    const now = context.currentTime;
 
-    oscillator.onended = () => {
-      context.close();
+    const playTone = (frequency, start, duration, volume) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(frequency, start);
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(volume, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + duration);
     };
+
+    playTone(880, now, 0.2, 0.16);
+    playTone(1320, now + 0.24, 0.2, 0.14);
+    playTone(1760, now + 0.48, 0.25, 0.12);
   } catch (error) {
     console.warn('Alarm sound could not play:', error);
   }
@@ -186,7 +201,7 @@ function renderSchedule() {
     scheduleList.appendChild(item);
   });
 
-  scheduleNote.textContent = `The schedule follows a continuous 35-minute cycle in Philippine Time, with each selected date showing the exact spawns that fall on that calendar day. Times are converted to ${timezoneInput.options[timezoneInput.selectedIndex].textContent}.`;
+  scheduleNote.textContent = `The schedule follows a continuous 15-minute cycle in Philippine Time, with each selected date showing the exact spawns that fall on that calendar day. Times are converted to ${timezoneInput.options[timezoneInput.selectedIndex].textContent}.`;
   scheduleNextAlarm(schedule);
 
 }
