@@ -73,9 +73,9 @@ function playAlarmSound() {
       oscillator.stop(start + duration);
     };
 
-    playTone(880, now, 0.2, 0.16);
-    playTone(1320, now + 0.24, 0.2, 0.14);
-    playTone(1760, now + 0.48, 0.25, 0.12);
+    playTone(880, now, 5, 1);
+    playTone(1320, now + 0.2, 5, 1);
+    playTone(1760, now + 0.4, 5, 1);
   } catch (error) {
     console.warn('Alarm sound could not play:', error);
   }
