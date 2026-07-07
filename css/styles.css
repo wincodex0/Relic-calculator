@@ -112,6 +112,53 @@ input[type='range'] {
   color: var(--text);
 }
 
+.alarm-panel {
+  background: rgba(255, 238, 175, 0.08);
+  border: 1px solid rgba(201, 162, 75, 0.22);
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 18px;
+}
+
+.alarm-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.alarm-title {
+  color: var(--gold-bright);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.alarm-description {
+  color: var(--text);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.alarm-toggle-row {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.alarm-status {
+  margin-top: 12px;
+  font-size: 0.87rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
 .level-marks {
   display: flex;
   justify-content: space-between;
@@ -203,7 +250,6 @@ tr.current td {
   border-top: 1px dashed var(--line);
   padding-top: 12px;
 }
-
 .tab-nav {
   display: flex;
   gap: 8px;
