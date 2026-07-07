@@ -9,11 +9,23 @@ function formatTimeInZone(date, timeZone) {
 
 function buildFullDaySchedule(timeZone, selectedDate) {
   const schedule = [];
-  const [year, month, day] = selectedDate.split('-').map(Number);
+  const cycleStart = new Date('2026-07-07T00:05:00+08:00');
+  const selectedDateStart = new Date(`${selectedDate}T00:00:00+08:00`);
+  const selectedDateEnd = new Date(selectedDateStart.getTime() + 24 * 60 * 60 * 1000);
+  const cycleStep = 35 * 60 * 1000;
 
-  for (let minutes = 5; minutes < 24 * 60; minutes += 35) {
-    const utcDate = new Date(Date.UTC(year, month - 1, day, 0, minutes - 480));
-    schedule.push(formatTimeInZone(utcDate, timeZone));
+  let spawnDate = new Date(cycleStart.getTime());
+
+  while (spawnDate < selectedDateStart) {
+    spawnDate = new Date(spawnDate.getTime() + cycleStep);
+  }
+
+  while (spawnDate < selectedDateEnd) {
+    if (spawnDate >= selectedDateStart) {
+      schedule.push(formatTimeInZone(spawnDate, timeZone));
+    }
+
+    spawnDate = new Date(spawnDate.getTime() + cycleStep);
   }
 
   return schedule;
@@ -31,10 +43,11 @@ function renderSchedule() {
     return;
   }
 
-  const formattedDate = new Date(`${selectedDateValue}T00:00:00`).toLocaleDateString([], {
+  const formattedDate = new Date(`${selectedDateValue}T00:00:00+08:00`).toLocaleDateString([], {
     weekday: 'long',
     month: 'short',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'Asia/Manila'
   });
 
   dayLabel.textContent = formattedDate;
@@ -48,14 +61,17 @@ function renderSchedule() {
     scheduleList.appendChild(item);
   });
 
-  scheduleNote.textContent = `Converted from Philippine Time (UTC+8) to ${timezoneInput.options[timezoneInput.selectedIndex].textContent}.`;
+  scheduleNote.textContent = `The schedule follows a continuous 35-minute cycle in Philippine Time, with each selected date showing the exact spawns that fall on that calendar day. Times are converted to ${timezoneInput.options[timezoneInput.selectedIndex].textContent}.`;
 }
 
 function initDatePicker() {
   const scheduleDateInput = document.getElementById('scheduleDate');
   const timezoneInput = document.getElementById('timezone');
   const today = new Date();
-  scheduleDateInput.value = today.toISOString().slice(0, 10);
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  scheduleDateInput.value = `${year}-${month}-${day}`;
   timezoneInput.addEventListener('change', renderSchedule);
   renderSchedule();
 }
