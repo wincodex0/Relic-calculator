@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fire Dungeon Schedule</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="tab-nav">
+        <a class="tab" href="index.html">Relic Token Calculator</a>
+        <a class="tab active" href="fire.html">Fire Dungeon Schedule</a>
+      </div>
+      <h1>Fire Dungeon Schedule</h1>
+      <div class="sub">Show the full daily fire dungeon spawn times from 12:00 AM to 11:55 PM in Philippine Time (UTC+8). Pick any date and the schedule will display only the times within that day.</div>
+
+      <div class="panel">
+        <div class="row">
+          <div class="field">
+            <label for="scheduleDate">Select a date</label>
+            <input type="date" id="scheduleDate" />
+          </div>
+          <div class="field">
+            <label for="timezone">Display time zone</label>
+            <select id="timezone">
+              <option value="Asia/Manila" selected>UTC+8 (Philippines)</option>
+              <option value="Asia/Singapore">UTC+8 (Singapore)</option>
+              <option value="Asia/Tokyo">UTC+9 (Tokyo)</option>
+              <option value="Australia/Sydney">UTC+10 (Sydney)</option>
+              <option value="Europe/London">UTC+0 (London)</option>
+              <option value="Europe/Berlin">UTC+1 (Berlin)</option>
+              <option value="Europe/Moscow">UTC+3 (Moscow)</option>
+              <option value="America/New_York">UTC-5 (New York)</option>
+              <option value="America/Chicago">UTC-6 (Chicago)</option>
+              <option value="America/Denver">UTC-7 (Denver)</option>
+              <option value="America/Los_Angeles">UTC-8 (Los Angeles)</option>
+              <option value="UTC">UTC</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="schedule-heading">Fire dungeon spawns for <span id="dayLabel"></span></div>
+        <div class="schedule" id="scheduleList"></div>
+        <div class="note">The schedule is based on 35-minute spawns and covers the full day in PH time.</div>
+      </div>
+
+      <div class="panel nav-panel">
+        <a class="back-link" href="index.html">← Back to Relic Token Calculator</a>
+      </div>
+    </div>
+
+    <script src="js/fire.js"></script>
+  </body>
+</html>

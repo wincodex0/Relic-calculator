@@ -203,3 +203,69 @@ tr.current td {
   border-top: 1px dashed var(--line);
   padding-top: 12px;
 }
+
+.tab-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.tab.active {
+  background: rgba(201, 162, 75, 0.2);
+  border-color: rgba(201, 162, 75, 0.35);
+  color: var(--gold-bright);
+}
+
+.interval-display {
+  color: var(--text);
+  font-size: 1rem;
+  margin-top: 6px;
+}
+
+.schedule-heading {
+  font-size: 0.95rem;
+  color: var(--gold-bright);
+  margin-bottom: 12px;
+}
+
+.schedule {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.schedule-item {
+  background: rgba(201, 162, 75, 0.1);
+  border: 1px solid rgba(201, 162, 75, 0.18);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-panel {
+  text-align: center;
+}
+
+.back-link {
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
